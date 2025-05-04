@@ -1,7 +1,10 @@
-const express = require('express');
+import express from 'express';
+import db from './config/db.js';
+import config from './config/index.js';
+
+
 const app = express();
-const port = process.env.PORT_NUMBER || 3000;
-const db = require('./config/db');
+const port = config.PORT_NUMBER;
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
