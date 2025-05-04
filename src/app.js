@@ -2,8 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import db from './config/db.js';
 import { config, limiter } from './config/index.js';
+import db from './config/db.js';
+import logger from './infrastructure/logger.js';
 
 
 const app = express();
@@ -20,22 +21,22 @@ app.get('/check-db', async (req, res) => {
     await db.query('SELECT 1');
     res.send('PostgreSQL database is connected!');
   } catch (error) {
-    console.error('Error checking database connection:', error);
+    logger.error('Error checking database connection:', error);
     res.status(500).send('Failed to connect to PostgreSQL database.');
   }
 });
 
 const server = app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  logger.info(`Server listening on port ${port}`);
 });
 
 const shutdown = async () => {
   await db.close();
   server.close((err) => {
     if (err) {
-      console.error('Error during server shutdown:', err);
+      logger.error('Error during server shutdown:', err);
     }
-    console.log('Server closed');
+    logger.info('Server closed');
     process.exit(0);
   });
 };

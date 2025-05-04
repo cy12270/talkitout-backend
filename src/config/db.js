@@ -1,5 +1,6 @@
-import { Pool } from 'pg';
 import { config } from './index.js';
+import { Pool } from 'pg';
+import logger from '../infrastructure/logger.js';
 
 
 const pool = new Pool({
@@ -11,11 +12,11 @@ const pool = new Pool({
 });
 
 pool.on('connect', () => {
-    console.log('Connected to PostgreSQL database');
+    logger.info('Connected to PostgreSQL database');
 });
 
 pool.on('error', (err) => {
-    console.error('Unexpected error on idle client', err);
+    logger.info('Unexpected error on idle client', err);
     process.exit(-1);
 });
 
