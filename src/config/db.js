@@ -1,23 +1,26 @@
-const { Pool } = require('pg');
-require('dotenv').config();
+import { config } from './index.js';
+import { Pool } from 'pg';
+import logger from '../infrastructure/logger.js';
+
 
 const pool = new Pool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    host: config.DB_HOST,
+    port: config.DB_PORT,
+    user: config.DB_USER,
+    password: config.DB_PASSWORD,
+    database: config.DB_DATABASE,
 });
 
 pool.on('connect', () => {
-    console.log('Connected to PostgreSQL database');
+    logger.info('Connected to PostgreSQL database');
 });
 
 pool.on('error', (err) => {
-    console.error('Unexpected error on idle client', err);
+    logger.info('Unexpected error on idle client', err);
     process.exit(-1);
 });
 
-module.exports = {
+export default {
     query: (text, params) => pool.query(text, params),
+    close: async () => await pool.end()
 };
