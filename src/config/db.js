@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import config from './index.js';
+import { config } from './index.js';
 
 
 const pool = new Pool({
@@ -21,4 +21,5 @@ pool.on('error', (err) => {
 
 export default {
     query: (text, params) => pool.query(text, params),
+    close: async () => await pool.end()
 };
