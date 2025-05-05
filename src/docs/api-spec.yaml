@@ -175,18 +175,18 @@ components:
           type: string
           enum:
             - registered
-            - accepted'
+            - accepted
             - profileCreated
-            - isActivated
-            - isDeactivated
+            - activated
+            - deactivated
             - rejected
         registeredAt:
           type: string
           format: date-time
-        profileCreatedAt:
+        acceptedAt:
           type: string
           format: date-time
-        pendingAt:
+        profileCreatedAt:
           type: string
           format: date-time
         activatedAt:
@@ -202,12 +202,9 @@ components:
     ClientForm:
       type: object
       required:
-        - id
         - counselorId
         - receivedAt
       properties:
-        id:
-          type: integer
         counselorId:
           type: integer
         receivedAt:
@@ -224,7 +221,6 @@ components:
         - role
         - status
         - createdAt
-        - updatedAt
       properties:
         id:
           type: integer
@@ -239,14 +235,14 @@ components:
           enum:
             - admin
             - counselor
-        registrationFormId:
-          type: integer
-          nullable: true
-        profileId:
+        counselorId:
           type: integer
           nullable: true
         status:
           type: string
+          enum:
+            - active
+            - inactive
         createdAt:
           type: string
           format: date-time

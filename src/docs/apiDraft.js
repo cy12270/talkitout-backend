@@ -89,15 +89,16 @@ const CounselorSchema = {
       type: String,
       enum: [
         'registered',
+        'accepted',
         'profileCreated',
-        'isActivated',
-        'isDeactivated',
+        'activated',
+        'deactivated',
         'rejected'
       ]
     },
     registeredAt: Date,
+    acceptedAt: Date,
     profileCreatedAt: Date,
-    pendingAt: Date,
     activatedAt: Date,
     deactivatedAt: Date,
     rejectedAt: Date
@@ -106,7 +107,6 @@ const CounselorSchema = {
 
 
 const ClientFormSchema = {
-  id: Number,
   counselorId: Number,
   receivedAt: Date
 };
@@ -116,10 +116,21 @@ const UserSchema = {
   userName: String,
   email: String,
   hashedPassword: String,
-  role: String,
-  registrationFormId: { type: Number, nullable: true },
-  profileId: { type: Number, nullable: true },
-  status: String,
+  role: {
+    type: String,
+    enum: [
+      'admin',
+      'counselor',
+    ]
+  },
+  counselorId: { type: Number, nullable: true },
+  status: {
+    type: String,
+    enum: [
+      'active',
+      'inactive',
+    ]
+  },
   createdAt: Date,
   updatedAt: Date
 };
@@ -137,6 +148,7 @@ const UserSchema = {
 // POST Upsert User (Edit Counselor record, only operated by authorized user whose role is admin)
 
 // Open
+// POST Upsert User (Create new counselor record when registration form is submitted)
 // GET Get Counselor by Id (Return most detailed to be displayed on the counselor details page)
 // GET Query Counselors (Return paginated filtering results)
 // POST Submit Client Form (Redirect form to counselor thru email as well as create record in db to count total number of cilent form of certain counselor receive)
