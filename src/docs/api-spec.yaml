@@ -175,7 +175,7 @@ components:
           type: string
           enum:
             - registered
-            - pendingForInterview
+            - accepted'
             - profileCreated
             - isActivated
             - isDeactivated

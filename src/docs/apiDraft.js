@@ -89,7 +89,6 @@ const CounselorSchema = {
       type: String,
       enum: [
         'registered',
-        'pendingForInterview',
         'profileCreated',
         'isActivated',
         'isDeactivated',
