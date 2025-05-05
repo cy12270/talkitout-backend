@@ -143,16 +143,17 @@ const UserSchema = {
 // Internal
 // GET Health Check (to see whether backend server is connected to db and have read/write access)
 // POST Bulk Insert Counselor (Insert multiple counselors for testing purpose/ when the app first launch)
+// POST Upsert User (to create admin account)
 
 // Protected
 // POST Upsert User (Edit Counselor record, only operated by authorized user whose role is admin)
 
 // Open
-// POST Upsert User (Create new counselor record when registration form is submitted)
 // GET Get Counselor by Id (Return most detailed to be displayed on the counselor details page)
 // GET Query Counselors (Return paginated filtering results)
 // POST Submit Client Form (Redirect form to counselor thru email as well as create record in db to count total number of cilent form of certain counselor receive)
 // POST Submit Inquires (Redirect Inquires form to talkitout thru email )
 // POST Submit Counselor Registration Form (Create Counselor record)
 // POST Login (Only for admin in phase 1)
+// After consideration, Upsert User  (Create new counselor record when registration form is submitted) does not have to be an open api, it should be done in service layer instead.
 
