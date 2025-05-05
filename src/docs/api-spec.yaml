@@ -1,0 +1,255 @@
+openapi: 3.0.0
+info:
+  title: Counselor API
+  version: 1.0.0
+  description: API for managing counselors and client forms
+
+paths:
+  /health-check:
+    get:
+      summary: Health Check
+      description: Returns the health status of the application.
+      responses:
+        '200':
+          description: Application is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: "2023-05-05T12:00:00Z"
+        '500':
+          description: Application is unhealthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "unhealthy"
+                  error:
+                    type: string
+                    example: "Database connection failed"
+
+components:
+  schemas:
+    Counselor:
+      type: object
+      required:
+        - id
+        - title
+        - contact
+        - qualifications
+        - languages
+        - shortDescription
+        - practitionerType
+        - registeredClinicAddress
+        - clientTypes
+        - hasInsurance
+        - status
+        - registeredAt
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        contact:
+          type: string
+        qualifications:
+          type: array
+          items:
+            type: string
+        languages:
+          type: array
+          items:
+            type: string
+            enum:
+              - cantonese
+              - english
+              - mandarin
+        shortDescription:
+          type: string
+        practitionerType:
+          type: string
+          enum:
+            - socialWorker
+            - counselor
+            - psychologist
+        registeredClinicAddress:
+          type: array
+          items:
+            type: object
+            required:
+              - clinicNameZh
+              - clinicNameEn
+              - fullAddressZh
+              - fullAddressEn
+        clientTypes:
+          type: array
+          items:
+            type: string
+            enum:
+              - individuals
+              - couples
+              - childrenTeens
+              - family
+              - group
+        hasInsurance:
+          type: boolean
+        practitionMode:
+          type: string
+          enum:
+            - online
+            - inPerson
+        isEmailVisible:
+          type: boolean
+        isContactVisible:
+          type: boolean
+        isFullAddressVisible:
+          type: boolean
+        profilePictureUris:
+          type: array
+          items:
+            type: string
+        certificateUris:
+          type: array
+          items:
+            type: string
+        websiteUrl:
+          type: array
+          items:
+            type: string
+        memberships:
+          type: array
+          items:
+            type: string
+        profile:
+          type: string
+        lowerPrice:
+          type: number
+        upperPrice:
+          type: number
+        gender:
+          type: array
+          items:
+            type: string
+            enum:
+              - male
+              - female
+              - nonBinary
+              - other
+        topics:
+          type: array
+          items:
+            type: string
+        therapyTypes:
+          type: array
+          items:
+            type: string
+        isCertified:
+          type: boolean
+        practitionClinicAddresses:
+          type: array
+          items:
+            type: object
+            required:
+              - clinicNameZh
+              - clinicNameEn
+              - fullAddressZh
+              - fullAddressEn
+              - websiteUrl
+              - locationZh
+              - locationEn
+        specialties:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum:
+            - registered
+            - pendingForInterview
+            - profileCreated
+            - isActivated
+            - isDeactivated
+            - rejected
+        registeredAt:
+          type: string
+          format: date-time
+        profileCreatedAt:
+          type: string
+          format: date-time
+        pendingAt:
+          type: string
+          format: date-time
+        activatedAt:
+          type: string
+          format: date-time
+        deactivatedAt:
+          type: string
+          format: date-time
+        rejectedAt:
+          type: string
+          format: date-time
+
+    ClientForm:
+      type: object
+      required:
+        - id
+        - counselorId
+        - receivedAt
+      properties:
+        id:
+          type: integer
+        counselorId:
+          type: integer
+        receivedAt:
+          type: string
+          format: date-time
+
+    User:
+      type: object
+      required:
+        - id
+        - userName
+        - email
+        - hashedPassword
+        - role
+        - status
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: integer
+        userName:
+          type: string
+        email:
+          type: string
+        hashedPassword:
+          type: string
+        role:
+          type: string
+          enum:
+            - admin
+            - counselor
+        registrationFormId:
+          type: integer
+          nullable: true
+        profileId:
+          type: integer
+          nullable: true
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
