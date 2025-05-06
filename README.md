@@ -1,6 +1,7 @@
 # talkitout
 
 # proposed architecture
+```markdown
 /app
   ├── app.js                          # Main application file
   ├── config                           # Configuration files
@@ -28,3 +29,4 @@
   │   └── integration                  # Integration tests
   └── docs                             # Documentation
       └── api.md                       # API documentation
+```
